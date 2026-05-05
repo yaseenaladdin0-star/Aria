@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARIA — Adaptive Robotics Intelligence Architecture | Aladdin Corporation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --cream:#faf8f3;--paper:#f4f1ea;--sand:#e8e3d8;
+  --warm-gray:#8a8478;--ink:#1c1917;--ink-light:#3d3a35;
+  --teal:#0f7a6b;--teal-light:#e8f4f2;--teal-mid:#1a9980;--teal-pale:#c8e8e3;
+  --amber:#c4660a;--amber-light:#fef3e6;--amber-pale:#fde0b8;
+  --blue:#1a4f7a;--blue-light:#e8f0f8;
+  --border:#ddd9d0;--border-strong:#c4bfb5;
+  --shadow:rgba(28,25,23,0.09);
+}
+body{background:var(--cream);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(250,248,243,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:-0.3px;display:flex;align-items:center;gap:8px;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--teal-mid);display:inline-block;}
+.nav-links{display:flex;gap:2px;list-style:none;align-items:center;}
+.nav-links a{color:var(--warm-gray);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:8px;transition:all .18s;display:block;}
+.nav-links a:hover{color:var(--ink);background:var(--paper);}
+.nav-cta{background:var(--teal)!important;color:#fff!important;font-weight:600!important;border-radius:8px!important;}
+.nav-cta:hover{background:var(--teal-mid)!important;color:#fff!important;}
+
+/* BUTTONS */
+.btn-p{background:var(--teal);color:#fff;font-weight:600;padding:14px 26px;border-radius:10px;font-size:15px;text-decoration:none;border:none;cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+.btn-p:hover{background:var(--teal-mid);transform:translateY(-2px);box-shadow:0 6px 20px rgba(15,122,107,.28);}
+.btn-s{background:transparent;color:var(--ink);font-weight:500;padding:14px 26px;border-radius:10px;font-size:15px;text-decoration:none;border:1.5px solid var(--border-strong);cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+.btn-s:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-light);}
+.btn-w{background:#fff;color:var(--teal);font-weight:600;padding:14px 26px;border-radius:10px;font-size:15px;text-decoration:none;border:none;cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+.btn-w:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18);}
+.btn-wo{background:transparent;color:#fff;font-weight:500;padding:14px 26px;border-radius:10px;font-size:15px;text-decoration:none;border:1.5px solid rgba(255,255,255,.45);cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .18s;display:inline-flex;align-items:center;gap:8px;}
+.btn-wo:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.8);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 48px 80px;gap:60px;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--cream) 0%,var(--paper) 55%,var(--teal-light) 100%);}
+.hero-bg-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(0,0,0,.25) 0%,transparent 75%);z-index:0;}
+.hero-left{position:relative;z-index:1;}
+.hero-right{position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--teal-light);border:1px solid var(--teal-pale);border-radius:100px;padding:6px 14px;margin-bottom:24px;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--teal-mid);animation:breathe 2.4s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(.7);opacity:.5;}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(44px,5.5vw,76px);font-weight:500;line-height:1.05;letter-spacing:-2px;margin-bottom:22px;color:var(--ink);}
+.hero h1 em{font-style:italic;color:var(--teal-mid);}
+.hero-lead{font-size:17px;color:var(--ink-light);max-width:500px;line-height:1.65;margin-bottom:36px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:52px;}
+.hero-stats{display:flex;gap:36px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--border);}
+.stat-num{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--ink);letter-spacing:-1px;line-height:1;margin-bottom:2px;}
+.stat-num span{color:var(--teal-mid);}
+.stat-label{font-size:12px;color:var(--warm-gray);}
+
+/* Hero right — photo + diagram */
+.hero-visual{display:flex;flex-direction:column;gap:16px;}
+.hero-photo{width:100%;height:240px;object-fit:cover;border-radius:16px;display:block;}
+.hero-diagram-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 8px 32px var(--shadow);}
+.diagram-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--warm-gray);text-transform:uppercase;margin-bottom:12px;}
+
+/* SECTIONS */
+section{padding:96px 48px;position:relative;}
+.si{max-width:1140px;margin:0 auto;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:14px;}
+h2{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,50px);font-weight:500;letter-spacing:-1.5px;line-height:1.08;margin-bottom:20px;color:var(--ink);}
+h2 em{font-style:italic;color:var(--teal-mid);}
+.lead{font-size:17px;color:var(--ink-light);max-width:560px;line-height:1.7;}
+
+/* PROBLEM */
+.problem{background:var(--paper);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:52px;align-items:start;}
+.prob-copy p{color:var(--ink-light);font-size:16px;line-height:1.75;margin-bottom:18px;}
+.prob-copy strong{color:var(--ink);font-weight:600;}
+.pull-quote{font-family:'Fraunces',serif;font-size:22px;font-weight:400;font-style:italic;color:var(--teal-mid);line-height:1.35;border-left:3px solid var(--teal-pale);padding-left:20px;margin:24px 0;}
+.prob-cards{display:flex;flex-direction:column;gap:0;}
+.pcard{background:#fff;border:1px solid var(--border);overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.pcard:first-child{border-radius:14px 14px 0 0;}
+.pcard:last-child{border-radius:0 0 14px 14px;}
+.pcard:not(:last-child){border-bottom:none;}
+.pcard:hover{box-shadow:0 8px 28px var(--shadow);transform:translateY(-2px);border-radius:14px;z-index:2;position:relative;}
+.pcard-img{width:100%;height:160px;object-fit:cover;display:block;}
+.pcard-body{padding:20px 22px;}
+.pcard-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px;}
+.pcard-tag.amber{color:var(--amber);}
+.pcard-tag.blue{color:var(--blue);}
+.pcard-tag.teal{color:var(--teal);}
+.pcard-title{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:6px;}
+.pcard p{font-size:13px;color:var(--warm-gray);line-height:1.6;}
+
+/* SOLUTION */
+.solution{background:var(--cream);}
+.sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:52px;}
+.diagram-wrap{background:#fff;border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:0 10px 40px var(--shadow);}
+.comp-cards{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.comp{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:all .2s;}
+.comp:hover{border-color:var(--teal-pale);box-shadow:0 6px 22px var(--shadow);}
+.comp-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.comp-ico.teal{background:var(--teal-light);}
+.comp-ico.amber{background:var(--amber-light);}
+.comp-ico.blue{background:var(--blue-light);}
+.comp h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.comp p{font-size:13px;color:var(--warm-gray);line-height:1.6;}
+.comp-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;margin-top:8px;}
+.comp-tag.teal{background:var(--teal-light);color:var(--teal);}
+.comp-tag.amber{background:var(--amber-light);color:var(--amber);}
+.comp-tag.blue{background:var(--blue-light);color:var(--blue);}
+
+/* FEDERATED */
+.federated{background:var(--paper);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.fed-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:52px;}
+.fed-copy p{font-size:16px;color:var(--ink-light);line-height:1.75;margin-bottom:16px;}
+.fed-copy strong{color:var(--ink);font-weight:600;}
+.fed-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;}
+.fed-stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.fed-num{font-family:'Fraunces',serif;font-size:28px;font-weight:600;color:var(--teal-mid);letter-spacing:-1px;line-height:1;margin-bottom:4px;}
+.fed-lbl{font-size:12px;color:var(--warm-gray);}
+
+/* TECH PHOTO STRIP */
+.photo-strip{background:var(--ink);padding:0;overflow:hidden;}
+.photo-strip-inner{display:grid;grid-template-columns:repeat(4,1fr);height:300px;}
+.strip-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;filter:brightness(.75) saturate(.9);}
+.strip-item{overflow:hidden;position:relative;}
+.strip-item:hover .strip-img{transform:scale(1.05);filter:brightness(.9) saturate(1);}
+.strip-cap{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(transparent,rgba(0,0,0,.65));font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;color:rgba(255,255,255,.8);text-transform:uppercase;}
+
+/* USE CASES */
+.cases{background:var(--cream);}
+.cases-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-bottom:52px;align-items:end;}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.case{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .22s;}
+.case:hover{box-shadow:0 16px 48px var(--shadow);transform:translateY(-4px);}
+.case-img{width:100%;height:180px;object-fit:cover;display:block;}
+.case-body{padding:26px;}
+.case-sector{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:10px;}
+.case h3{font-family:'Fraunces',serif;font-size:20px;font-weight:500;letter-spacing:-.5px;margin-bottom:10px;color:var(--ink);}
+.case p{font-size:13px;color:var(--warm-gray);line-height:1.7;}
+.case-goal{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--teal);font-family:'DM Mono',monospace;letter-spacing:.03em;}
+
+/* ROADMAP */
+.roadmap{background:var(--paper);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.road-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-bottom:48px;align-items:end;}
+.phase{display:grid;grid-template-columns:110px 1fr;gap:28px;padding:26px 0;border-bottom:1px solid var(--border);align-items:start;}
+.phase:last-child{border-bottom:none;}
+.ph-num{font-family:'Fraunces',serif;font-size:42px;font-weight:600;color:var(--teal-pale);letter-spacing:-2px;line-height:1;transition:color .18s;}
+.phase:hover .ph-num{color:var(--teal-mid);}
+.ph-time{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;color:var(--warm-gray);text-transform:uppercase;margin-top:4px;}
+.phase h3{font-size:17px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.phase p{font-size:14px;color:var(--ink-light);line-height:1.65;max-width:500px;}
+.ph-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.ph-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.05em;padding:4px 10px;border-radius:5px;background:var(--sand);color:var(--warm-gray);text-transform:uppercase;}
+
+/* CONTACT */
+.contact{background:var(--cream);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.contact-copy h2{margin-bottom:16px;}
+.contact-copy p{font-size:16px;color:var(--ink-light);line-height:1.75;margin-bottom:28px;}
+.c-detail{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;padding:14px 16px;background:var(--paper);border:1px solid var(--border);border-radius:10px;}
+.c-bar{width:3px;height:36px;background:var(--teal-pale);border-radius:2px;flex-shrink:0;margin-top:2px;}
+.c-title{font-weight:600;font-size:14px;color:var(--ink);line-height:1.3;}
+.c-desc{font-size:13px;color:var(--warm-gray);}
+.c-location{margin-top:22px;font-family:'DM Mono',monospace;font-size:11px;color:var(--warm-gray);letter-spacing:.03em;line-height:1.8;}
+
+/* FORM */
+.form-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:38px;box-shadow:0 8px 32px var(--shadow);}
+.form-title{font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-.5px;margin-bottom:4px;color:var(--ink);}
+.form-sub{font-size:14px;color:var(--warm-gray);margin-bottom:26px;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--ink-light);margin-bottom:6px;letter-spacing:.01em;}
+.fg input,.fg textarea,.fg select{width:100%;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:15px;outline:none;transition:border-color .18s,box-shadow .18s;resize:none;appearance:none;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--teal-mid);box-shadow:0 0 0 3px rgba(26,153,128,.1);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--border-strong);}
+.fg textarea{min-height:110px;line-height:1.6;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.submit-btn{width:100%;background:var(--teal);color:#fff;font-weight:600;padding:14px;border-radius:10px;font-size:15px;border:none;cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .18s;margin-top:4px;}
+.submit-btn:hover{background:var(--teal-mid);transform:translateY(-1px);box-shadow:0 6px 20px rgba(15,122,107,.3);}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.form-status{margin-top:14px;padding:12px 16px;border-radius:10px;font-size:14px;display:none;}
+.form-status.ok{background:var(--teal-light);border:1px solid var(--teal-pale);color:var(--teal);display:block;}
+.form-status.err{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;display:block;}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(28,25,23,.65);backdrop-filter:blur(6px);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;}
+.modal-bg.on{display:flex;}
+.modal{background:#fff;border-radius:22px;padding:42px;max-width:500px;width:100%;position:relative;box-shadow:0 32px 80px rgba(28,25,23,.22);animation:mIn .27s ease;}
+@keyframes mIn{from{opacity:0;transform:translateY(12px) scale(.98);}to{opacity:1;transform:none;}}
+.modal-x{position:absolute;top:16px;right:16px;background:var(--paper);border:none;color:var(--warm-gray);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;}
+.modal-x:hover{background:var(--sand);color:var(--ink);}
+.modal-eye{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--teal);text-transform:uppercase;margin-bottom:10px;}
+.modal h3{font-family:'Fraunces',serif;font-size:24px;font-weight:500;letter-spacing:-.5px;margin-bottom:6px;color:var(--ink);}
+.modal-desc{font-size:14px;color:var(--warm-gray);margin-bottom:24px;line-height:1.6;}
+
+/* CTA BAND */
+.cta-band{background:linear-gradient(135deg,#0a6057 0%,var(--teal-mid) 100%);padding:80px 48px;text-align:center;}
+.cta-band h2{color:#fff;margin-bottom:16px;}
+.cta-band p{color:rgba(255,255,255,.75);font-size:17px;max-width:460px;margin:0 auto 36px;}
+.cta-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+.foot-logo{font-family:'Fraunces',serif;font-size:18px;font-weight:500;color:#fff;}
+.foot-logo span{color:var(--teal-mid);}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;}
+.foot-links a{font-size:13px;color:rgba(255,255,255,.42);text-decoration:none;transition:color .15s;}
+.foot-links a:hover{color:rgba(255,255,255,.8);}
+.foot-copy{font-size:12px;color:rgba(255,255,255,.28);font-family:'DM Mono',monospace;}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+.rev.on{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-eye">Get in touch</div>
+    <h3>Send us a message</h3>
+    <p class="modal-desc">We welcome partners, researchers, investors, and anyone curious about ARIA. We read every message and reply personally.</p>
+    <div class="fg"><label>Your name</label><input type="text" id="m-name" placeholder="Jane Smith"></div>
+    <div class="fg"><label>Your email</label><input type="email" id="m-email" placeholder="jane@example.com"></div>
+    <div class="fg"><label>Message</label><textarea id="m-msg" placeholder="Tell us about your interest in ARIA..."></textarea></div>
+    <button class="submit-btn" id="m-btn" onclick="submitModal()">Send message</button>
+    <div class="form-status" id="m-status"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-logo"><span class="nav-dot"></span>ARIA</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#federated">Technology</a></li>
+    <li><a href="#cases">Use Cases</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Concept Stage &mdash; Aladdin Corporation</div>
+    <h1>The universal<br>AI brain for<br><em>any robot.</em></h1>
+    <p class="hero-lead">ARIA is a modular intelligence layer designed to attach to virtually any existing robot and give it autonomous decision-making, environmental awareness, and continuous learning &mdash; for under $200.</p>
+    <div class="hero-btns">
+      <a href="#solution" class="btn-p">See how it works &#8595;</a>
+      <button class="btn-s" onclick="openModal()">Get in touch &#8599;</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">$<span>200</span></div><div class="stat-label">Target hardware cost</div></div>
+      <div><div class="stat-num">&lt;<span>15</span>W</div><div class="stat-label">Power draw target</div></div>
+      <div><div class="stat-num"><span>3</span></div><div class="stat-label">Core impact sectors</div></div>
+      <div><div class="stat-num"><span>12</span>mo</div><div class="stat-label">Prototype roadmap</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1509099342178-e323b1717dba?w=800&q=80&auto=format&fit=crop&crop=top" alt="An African woman plants crops with her baby on her back — the daily reality ARIA is built to transform">
+      <div class="hero-diagram-card">
+        <div class="diagram-label">ARIA System Architecture &mdash; concept</div>
+        <!-- Three equal columns: Robot | ARIA HIM | Network. All tops at y=8, bottoms at y=140 -->
+        <svg width="100%" viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg">
+          <!-- Col 1: Robot (x 4..88) -->
+          <rect x="4" y="8" width="84" height="132" rx="8" fill="#e8f4f2" stroke="#1a9980" stroke-width="1.5"/>
+          <text x="46" y="56" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="#0f7a6b" font-weight="500">EXISTING</text>
+          <text x="46" y="70" text-anchor="middle" font-family="DM Mono,monospace" font-size="8.5" fill="#0f7a6b" font-weight="500">ROBOT</text>
+          <text x="46" y="92" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Any platform</text>
+          <text x="46" y="104" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">ROS2-capable</text>
+          <!-- Arrow Col1→Col2 at vertical centre y=74 -->
+          <line x1="88" y1="74" x2="104" y2="74" stroke="#c4bfb5" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <polygon points="101,70 109,74 101,78" fill="#c4bfb5"/>
+          <!-- Col 2: ARIA HIM (x 109..251) taller, centred -->
+          <rect x="109" y="8" width="142" height="132" rx="8" fill="#fff" stroke="#0f7a6b" stroke-width="2"/>
+          <rect x="109" y="8" width="142" height="24" rx="8" fill="#0f7a6b"/>
+          <rect x="109" y="20" width="142" height="12" fill="#0f7a6b"/>
+          <text x="180" y="25" text-anchor="middle" font-family="DM Mono,monospace" font-size="9.5" fill="#fff" font-weight="500">ARIA HIM</text>
+          <!-- 2×2 chip grid inside, uniform size 60×26, gap 8 -->
+          <!-- Row A: y=40..66 -->
+          <rect x="117" y="40" width="60" height="26" rx="5" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+          <text x="147" y="51" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#0f7a6b" font-weight="500">AI Core</text>
+          <text x="147" y="62" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#1a9980">Jetson Nano</text>
+          <rect x="183" y="40" width="60" height="26" rx="5" fill="#fef3e6" stroke="#c4660a" stroke-width="1"/>
+          <text x="213" y="51" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#c4660a" font-weight="500">MCU I/O</text>
+          <text x="213" y="62" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#c4660a">STM32F4</text>
+          <!-- Row B: y=74..100 -->
+          <rect x="117" y="74" width="60" height="26" rx="5" fill="#e8f0f8" stroke="#1a4f7a" stroke-width="1"/>
+          <text x="147" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#1a4f7a" font-weight="500">Vision</text>
+          <text x="147" y="96" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#1a4f7a">Camera/LiDAR</text>
+          <rect x="183" y="74" width="60" height="26" rx="5" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+          <text x="213" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#0f7a6b" font-weight="500">NLP</text>
+          <text x="213" y="96" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#0f7a6b">Voice control</text>
+          <!-- Protocol strip: y=108..126 -->
+          <rect x="117" y="108" width="126" height="22" rx="5" fill="#f4f1ea" stroke="#c4bfb5" stroke-width="1"/>
+          <text x="180" y="122" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#8a8478">ROS2 · CAN bus · USB · Wireless</text>
+          <!-- Arrow Col2→Col3 at y=74 -->
+          <line x1="251" y1="74" x2="267" y2="74" stroke="#c4bfb5" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <polygon points="264,70 272,74 264,78" fill="#c4bfb5"/>
+          <!-- Col 3: Federated Network (x 272..356) -->
+          <rect x="272" y="8" width="84" height="132" rx="8" fill="#fef3e6" stroke="#c4660a" stroke-width="1.5"/>
+          <text x="314" y="56" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#c4660a" font-weight="500">FEDERATED</text>
+          <text x="314" y="70" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#c4660a" font-weight="500">NETWORK</text>
+          <text x="314" y="92" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Global model</text>
+          <text x="314" y="104" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">sync on connect</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="si">
+    <div class="eyebrow">The Problem</div>
+    <h2>Robots exist.<br><em>Intelligence doesn't.</em></h2>
+    <div class="prob-grid">
+      <div class="prob-copy rev">
+        <p>The world has a robot paradox. Machines capable of transforming agriculture, healthcare, and disaster response have been deployed across the globe &mdash; yet the vast majority remain locked in rigid, pre-programmed routines. <strong>They cannot adapt, learn, or respond</strong> to the unpredictable complexity of real environments.</p>
+        <div class="pull-quote">"This is not a hardware problem. It is an intelligence problem."</div>
+        <p>Existing AI integration for robotics remains expensive, proprietary, and out of reach for the organizations that need it most. The communities who could benefit most from intelligent automation &mdash; <strong>smallholder farmers, understaffed hospitals, disaster first responders</strong> &mdash; are the ones systematically excluded from it.</p>
+        <p>ARIA is designed to close that gap. Not by building new robots, but by giving intelligence to the ones that already exist.</p>
+      </div>
+      <div class="prob-cards rev">
+        <div class="pcard">
+          <img class="pcard-img" src="https://images.unsplash.com/photo-1509099381441-ea3c0cf98b94?w=700&q=80&auto=format&fit=crop&crop=center" alt="African woman bent over planting crops by hand — subsistence farming without any automated help">
+          <div class="pcard-body">
+            <div class="pcard-tag amber">Agriculture &middot; Global</div>
+            <div class="pcard-title">The precision gap</div>
+            <p>Smallholder farmers have access to basic robotic equipment but not the AI tools for precision agriculture &mdash; crop disease detection, autonomous navigation, or adaptive harvesting. Their robots follow fixed paths and cannot respond to their environment.</p>
+          </div>
+        </div>
+        <div class="pcard">
+          <img class="pcard-img" src="https://images.unsplash.com/photo-1648224394463-4589e018f2c3?w=700&q=80&auto=format&fit=crop&crop=center" alt="Hospital ward with bed and medical equipment — a robotic aid here cannot adapt when conditions change">
+          <div class="pcard-body">
+            <div class="pcard-tag blue">Healthcare &middot; Low-resource settings</div>
+            <div class="pcard-title">The adaptability gap</div>
+            <p>Basic robotic aids in understaffed hospitals cannot adapt to ward changes, recognize emergencies, or communicate in the local language. The potential value they could deliver goes entirely unrealized.</p>
+          </div>
+        </div>
+        <div class="pcard">
+          <img class="pcard-img" src="https://images.unsplash.com/photo-1650638727175-347f9f3a83c8?w=700&q=80&auto=format&fit=crop&crop=center" alt="People beside a collapsed building after an earthquake — no robotic search and rescue, no specialist operator present">
+          <div class="pcard-body">
+            <div class="pcard-tag teal">Disaster Response &middot; Global</div>
+            <div class="pcard-title">The operator gap</div>
+            <p>Robotic search-and-rescue systems require trained specialist operators rarely available in the critical first hours of a disaster. A robot that only an expert can use saves far fewer lives than one anyone can direct.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solution">
+  <div class="si">
+    <div class="eyebrow">The Solution</div>
+    <h2>Two components.<br><em>One universal brain.</em></h2>
+    <div class="sol-grid">
+      <div class="rev">
+        <div class="diagram-wrap">
+          <div class="diagram-label">Hardware Interface Module &mdash; internal layout (conceptual)</div>
+          <!-- Clean grid layout: header strip, 3 rows of chips, connector strip -->
+          <svg width="100%" viewBox="0 0 320 196" xmlns="http://www.w3.org/2000/svg">
+            <!-- PCB border -->
+            <rect x="4" y="4" width="312" height="188" rx="10" fill="#f4f1ea" stroke="#c4bfb5" stroke-width="1.5"/>
+            <!-- Header bar -->
+            <rect x="4" y="4" width="312" height="20" rx="10" fill="#e8e3d8" stroke="#c4bfb5" stroke-width="1.5"/>
+            <rect x="4" y="14" width="312" height="10" fill="#e8e3d8"/>
+            <text x="160" y="18" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#8a8478">ARIA-CB-01  ·  4-layer PCB  ·  120 × 80mm  ·  IP54 rated</text>
+            <!-- Row 1: y=32, three chips equal width: Jetson (w=104), STM32 (w=80), WiFi (w=80) -->
+            <!-- Chip A: Jetson Nano x=12, w=104 -->
+            <rect x="12" y="32" width="104" height="44" rx="6" fill="#e8f4f2" stroke="#1a9980" stroke-width="1.5"/>
+            <text x="64" y="51" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#0f7a6b" font-weight="500">Jetson Nano 4GB</text>
+            <text x="64" y="63" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#1a9980">AI Core  ·  ARIA Stack</text>
+            <!-- Chip B: STM32 x=124, w=86 -->
+            <rect x="124" y="32" width="86" height="44" rx="6" fill="#fef3e6" stroke="#c4660a" stroke-width="1.5"/>
+            <text x="167" y="51" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#c4660a" font-weight="500">STM32F4</text>
+            <text x="167" y="63" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#c4660a">Real-time I/O</text>
+            <!-- Chip C: Wi-Fi x=218, w=90 -->
+            <rect x="218" y="32" width="90" height="44" rx="6" fill="#e8f0f8" stroke="#1a4f7a" stroke-width="1.5"/>
+            <text x="263" y="51" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#1a4f7a" font-weight="500">Wi-Fi / BT</text>
+            <text x="263" y="63" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#1a4f7a">Intel AX200</text>
+            <!-- Row 2: y=84, three chips: Power, CAN Bus, RS-485 -->
+            <rect x="12" y="84" width="104" height="36" rx="6" fill="#f4f1ea" stroke="#8a8478" stroke-width="1"/>
+            <text x="64" y="99" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#8a8478" font-weight="500">Power MGMT</text>
+            <text x="64" y="110" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#8a8478">TPS65217  5–24V in</text>
+            <rect x="124" y="84" width="86" height="36" rx="6" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+            <text x="167" y="99" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#0f7a6b" font-weight="500">CAN Bus ×2</text>
+            <text x="167" y="110" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#1a9980">MCP2562 120Ω</text>
+            <rect x="218" y="84" width="90" height="36" rx="6" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+            <text x="263" y="99" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="#0f7a6b" font-weight="500">RS-485 ×2</text>
+            <text x="263" y="110" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#1a9980">MAX485</text>
+            <!-- Connection lines between rows (vertical, centred) -->
+            <line x1="64" y1="76" x2="64" y2="84" stroke="#ddd9d0" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="167" y1="76" x2="167" y2="84" stroke="#ddd9d0" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="263" y1="76" x2="263" y2="84" stroke="#ddd9d0" stroke-width="1" stroke-dasharray="2 2"/>
+            <!-- Horizontal bus line connecting all chips, row 1 mid -->
+            <line x1="12" y1="54" x2="308" y2="54" stroke="#ddd9d0" stroke-width="0.75" opacity="0.5"/>
+            <!-- Connector strip: y=128, five connectors evenly spaced -->
+            <!-- gap: total width=296, 5 connectors w=52, spacing=(296-260)/4=9 -->
+            <rect x="12"  y="130" width="52" height="20" rx="4" fill="#e8f0f8" stroke="#1a4f7a" stroke-width="1"/>
+            <text x="38"  y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#1a4f7a">M12 Conn</text>
+            <rect x="70"  y="130" width="52" height="20" rx="4" fill="#fef3e6" stroke="#c4660a" stroke-width="1"/>
+            <text x="96"  y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#c4660a">XT30 Pwr</text>
+            <rect x="128" y="130" width="52" height="20" rx="4" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+            <text x="154" y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#0f7a6b">Cameras</text>
+            <rect x="186" y="130" width="52" height="20" rx="4" fill="#f4f1ea" stroke="#8a8478" stroke-width="1"/>
+            <text x="212" y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#8a8478">Mic Array</text>
+            <rect x="244" y="130" width="64" height="20" rx="4" fill="#f4f1ea" stroke="#8a8478" stroke-width="1"/>
+            <text x="276" y="143" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="#8a8478">IMU / RJ45</text>
+            <!-- Footer note -->
+            <text x="160" y="180" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">BOM target ~$182 @ 1,000 units  ·  &lt;15W  ·  Offline-first  ·  IP54</text>
+          </svg>
+        </div>
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80&auto=format&fit=crop&crop=center" alt="Embedded computing board with GPIO pins and wiring — the class of hardware inside ARIA HIM" style="width:100%;height:160px;object-fit:cover;border-radius:14px;margin-top:14px;border:1px solid var(--border);">
+      </div>
+      <div class="rev">
+        <p class="lead" style="margin-bottom:28px;">ARIA attaches to existing robots through two integrated components. No proprietary lock-in. No specialist installation. Fully operational with zero internet connectivity.</p>
+        <div class="comp-cards">
+          <div class="comp">
+            <div class="comp-ico teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f7a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 2v5M8 2v5"/></svg></div>
+            <div>
+              <h3>Hardware Interface Module</h3>
+              <p>Compact edge compute unit connecting to any robot via ROS2, CAN bus, USB, or wireless. Ruggedized for field conditions. Pre-flashed and ready to deploy.</p>
+              <div class="comp-tag teal">ARIA-HIM v1.0 &middot; &lt;$200 target</div>
+            </div>
+          </div>
+          <div class="comp">
+            <div class="comp-ico amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4660a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
+            <div>
+              <h3>ARIA Software Stack</h3>
+              <p>Built on ROS2. Multimodal perception, natural language control in any language, and an on-device reinforcement learning engine that improves with every task.</p>
+              <div class="comp-tag amber">ROS2 &middot; Edge AI &middot; NLP &middot; RL</div>
+            </div>
+          </div>
+          <div class="comp">
+            <div class="comp-ico blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a4f7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <div>
+              <h3>Universal Compatibility</h3>
+              <p>ARIA does not replace robots &mdash; it gives them intelligence. Compatible with industrial arms, agricultural platforms, hospital robots, and any ROS2-capable system.</p>
+              <div class="comp-tag blue">Hardware-agnostic &middot; Offline-first</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEDERATED -->
+<section class="federated" id="federated">
+  <div class="si">
+    <div class="eyebrow">Core Technology</div>
+    <h2>Every robot teaches<br><em>every other robot.</em></h2>
+    <div class="fed-grid">
+      <div class="fed-copy rev">
+        <p>ARIA's core architectural innovation is a federated learning network across all deployed units. Each robot contributes <strong>anonymized behavioral improvements</strong> &mdash; not raw data &mdash; to a shared model. When one unit discovers a more effective approach to a task, that improvement propagates to other ARIA units on their next connection.</p>
+        <p>This is built on <strong>federated averaging and differential privacy</strong> &mdash; established techniques from the machine learning research community, applied here to physical robot behavior. No raw operational data ever leaves the device.</p>
+        <p>The network effect is central to ARIA's value proposition: <strong>the more robots run ARIA, the smarter every robot becomes.</strong> Units that operate offline receive model updates when they next connect.</p>
+        <div class="fed-stats">
+          <div class="fed-stat"><div class="fed-num">100%</div><div class="fed-lbl">Operational without internet</div></div>
+          <div class="fed-stat"><div class="fed-num">0</div><div class="fed-lbl">Raw device data shared externally</div></div>
+          <div class="fed-stat"><div class="fed-num">+N</div><div class="fed-lbl">Network improves with each unit added</div></div>
+          <div class="fed-stat"><div class="fed-num">$200</div><div class="fed-lbl">Target hardware cost per unit</div></div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&q=80&auto=format&fit=crop&crop=center" alt="Data network cables — representing the ARIA federated learning network connecting deployed units" style="width:100%;height:140px;object-fit:cover;border-radius:12px;margin-top:20px;border:1px solid var(--border);">
+      </div>
+      <div class="rev">
+        <div class="diagram-wrap">
+          <div class="diagram-label">Federated Learning Flow &mdash; conceptual illustration</div>
+          <!-- Federated diagram: marker arrows, mathematically precise -->
+          <svg width="100%" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr-teal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#1a9980" opacity=".7"/>
+              </marker>
+              <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#1a4f7a" opacity=".7"/>
+              </marker>
+              <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#8a8478" opacity=".7"/>
+              </marker>
+            </defs>
+
+            <!-- Centre circle cx=150 cy=140 r=40 -->
+            <circle cx="150" cy="140" r="40" fill="#e8f4f2" stroke="#1a9980" stroke-width="2"/>
+            <text x="150" y="134" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#0f7a6b" font-weight="500">ARIA</text>
+            <text x="150" y="146" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#0f7a6b" font-weight="500">GLOBAL</text>
+            <text x="150" y="158" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#0f7a6b" font-weight="500">MODEL</text>
+
+            <!-- 4 corner boxes: all 76×44 -->
+            <!-- TL: Agriculture  x=6  y=12  centre=(44,34) -->
+            <rect x="6"   y="12"  width="76" height="44" rx="7" fill="#fef3e6" stroke="#c4660a" stroke-width="1.5"/>
+            <text x="44"  y="32"  text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#c4660a" font-weight="500">Agriculture</text>
+            <text x="44"  y="46"  text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Field unit</text>
+
+            <!-- TR: Healthcare  x=218  y=12  centre=(256,34) -->
+            <rect x="218" y="12"  width="76" height="44" rx="7" fill="#e8f0f8" stroke="#1a4f7a" stroke-width="1.5"/>
+            <text x="256" y="32"  text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#1a4f7a" font-weight="500">Healthcare</text>
+            <text x="256" y="46"  text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Hospital unit</text>
+
+            <!-- BL: Disaster  x=6  y=224  centre=(44,246) -->
+            <rect x="6"   y="224" width="76" height="44" rx="7" fill="#e8f4f2" stroke="#1a9980" stroke-width="1.5"/>
+            <text x="44"  y="244" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#0f7a6b" font-weight="500">Disaster</text>
+            <text x="44"  y="258" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Response unit</text>
+
+            <!-- BR: Industrial  x=218  y=224  centre=(256,246) -->
+            <rect x="218" y="224" width="76" height="44" rx="7" fill="#f4f1ea" stroke="#8a8478" stroke-width="1.5"/>
+            <text x="256" y="244" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#8a8478" font-weight="500">Industrial</text>
+            <text x="256" y="258" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#8a8478">Factory unit</text>
+
+            <!--
+              Arrow geometry — each line runs from node-edge midpoint to circle edge.
+              Node box right-edge x=82, left-edge x=218. Mid-y of TL/TR boxes = 34, BL/BR = 246.
+              Circle centre (150,140) r=40.
+
+              TL → circle: from (82,34) direction vector (68,106), length=125.6, unit=(0.541,0.844)
+                circle entry = (150-40*0.541, 140-40*0.844) = (128.4, 106.2)
+              TR → circle: from (218,34) direction vector (-68,106), length=125.6, unit=(-0.541,0.844)
+                circle entry = (150+40*0.541, 140-40*0.844) = (171.6, 106.2)
+              BL → circle: from (82,246) direction vector (68,-106), length=125.6, unit=(0.541,-0.844)
+                circle entry = (150-40*0.541, 140+40*0.844) = (128.4, 173.8)
+              BR → circle: from (218,246) direction vector (-68,-106), length=125.6, unit=(-0.541,-0.844)
+                circle entry = (150+40*0.541, 140+40*0.844) = (171.6, 173.8)
+            -->
+
+            <!-- TL: Agriculture → centre (teal) -->
+            <line x1="82" y1="34" x2="128" y2="106"
+              stroke="#1a9980" stroke-width="1.3" stroke-dasharray="5 3" opacity=".7"
+              marker-end="url(#arr-teal)"/>
+            <text x="88" y="74" font-family="DM Mono,monospace" font-size="7" fill="#1a9980" opacity=".85">updates</text>
+
+            <!-- TR: Healthcare → centre (blue) -->
+            <line x1="218" y1="34" x2="172" y2="106"
+              stroke="#1a4f7a" stroke-width="1.3" stroke-dasharray="5 3" opacity=".7"
+              marker-end="url(#arr-blue)"/>
+            <text x="212" y="74" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#1a4f7a" opacity=".85">updates</text>
+
+            <!-- BL: Disaster → centre (teal) -->
+            <line x1="82" y1="246" x2="128" y2="174"
+              stroke="#1a9980" stroke-width="1.3" stroke-dasharray="5 3" opacity=".7"
+              marker-end="url(#arr-teal)"/>
+            <text x="88" y="216" font-family="DM Mono,monospace" font-size="7" fill="#1a9980" opacity=".85">updates</text>
+
+            <!-- BR: Industrial → centre (gray) -->
+            <line x1="218" y1="246" x2="172" y2="174"
+              stroke="#8a8478" stroke-width="1.3" stroke-dasharray="5 3" opacity=".7"
+              marker-end="url(#arr-gray)"/>
+            <text x="212" y="216" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="#8a8478" opacity=".85">updates</text>
+
+            <!-- Privacy pill -->
+            <rect x="88" y="258" width="124" height="18" rx="6" fill="#e8f4f2" stroke="#1a9980" stroke-width="1"/>
+            <text x="150" y="270" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#0f7a6b">No raw data leaves device</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="photo-strip-inner">
+    <div class="strip-item">
+      <img class="strip-img" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80&auto=format&fit=crop&crop=center" alt="Dry cracked farmland — the environment where ARIA's agricultural deployment begins">
+      <div class="strip-cap">Agriculture &middot; Subsistence farming</div>
+    </div>
+    <div class="strip-item">
+      <img class="strip-img" src="https://images.unsplash.com/photo-1631376178637-392efc9e356b?w=600&q=80&auto=format&fit=crop&crop=center" alt="Raspberry Pi RP2040 PCBs with ENIG gold finish — the class of microcontroller hardware at the heart of ARIA HIM">
+      <div class="strip-cap">Edge AI &middot; Embedded compute</div>
+    </div>
+    <div class="strip-item">
+      <img class="strip-img" src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80&auto=format&fit=crop&crop=center" alt="Nurse providing direct care to a patient — the human reality in under-resourced hospitals">
+      <div class="strip-cap">Healthcare &middot; Rural clinics</div>
+    </div>
+    <div class="strip-item">
+      <img class="strip-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80&auto=format&fit=crop&crop=center" alt="Embedded computing board — Edge AI hardware of the class used in ARIA HIM">
+      <div class="strip-cap">Hardware &middot; PCB engineering</div>
+    </div>
+  </div>
+</div>
+
+<!-- USE CASES -->
+<section class="cases" id="cases">
+  <div class="si">
+    <div class="cases-intro">
+      <div>
+        <div class="eyebrow">Target Impact Areas</div>
+        <h2>Three sectors.<br><em>One brain.</em></h2>
+      </div>
+      <p class="lead rev">ARIA is designed around the communities that need accessible, intelligent robotics most &mdash; and have historically been excluded from it. Each use case is grounded in a real, documented need.</p>
+    </div>
+    <div class="cases-grid rev">
+      <div class="case">
+        <img class="case-img" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80&auto=format&fit=crop&crop=center" alt="Workers harvesting crops by hand across a vast field — the scale of manual labour ARIA can transform">
+        <div class="case-body">
+          <div class="case-sector">Agriculture</div>
+          <h3>Smallholder Farming</h3>
+          <p>ARIA is designed to give basic agricultural robots the ability to navigate variable terrain, identify visual anomalies in crops, and respond to voice instructions in the operator's language &mdash; with no connectivity required. The goal: make precision agriculture accessible far beyond large commercial operations.</p>
+          <div class="case-goal">Goal: Autonomous field operation without specialist training</div>
+        </div>
+      </div>
+      <div class="case">
+        <img class="case-img" src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=600&q=80&auto=format&fit=crop&crop=center" alt="Healthcare worker attending to a patient in a ward — one nurse, many patients, not enough hours">
+        <div class="case-body">
+          <div class="case-sector">Healthcare</div>
+          <h3>Understaffed Hospitals</h3>
+          <p>ARIA aims to transform basic robotic aids into adaptive assistants that can recognize changes in their environment, adjust routing in real time, and communicate with staff using natural language &mdash; dramatically expanding what low-cost hardware can do in resource-constrained settings.</p>
+          <div class="case-goal">Goal: Adaptive ward assistance without reprogramming</div>
+        </div>
+      </div>
+      <div class="case">
+        <img class="case-img" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=600&q=80&auto=format&fit=crop&crop=center" alt="People wading through flood carrying children — disaster response without robotic aid">
+        <div class="case-body">
+          <div class="case-sector">Disaster Response</div>
+          <h3>First Responder Robotics</h3>
+          <p>ARIA is designed so that any first responder &mdash; without technical training &mdash; can deploy and direct a robot using plain language commands. The goal is to remove the specialist operator requirement that currently limits robotic deployment in the critical early hours of a disaster.</p>
+          <div class="case-goal">Goal: Zero-training deployment for any first responder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap" id="roadmap">
+  <div class="si">
+    <div class="road-intro">
+      <div>
+        <div class="eyebrow">Build Roadmap</div>
+        <h2>From architecture<br><em>to prototype.</em></h2>
+      </div>
+      <p class="lead rev">A 12-month pathway from architecture design to a validated field-tested prototype. Each phase builds directly on the last, with honest milestones and real engineering deliverables.</p>
+    </div>
+    <div class="phase rev">
+      <div><div class="ph-num">01</div><div class="ph-time">Months 1&ndash;4</div></div>
+      <div>
+        <h3>Hardware Bring-Up</h3>
+        <p>Custom carrier PCB fabrication (ARIA-CB-01), Jetson Nano and STM32F4 integration, power rail validation, and ROS2 stack deployment. All hardware drivers written and tested against the initial robot platform.</p>
+        <div class="ph-tags"><span class="ph-tag">PCB Design</span><span class="ph-tag">ROS2</span><span class="ph-tag">Embedded Firmware</span></div>
+      </div>
+    </div>
+    <div class="phase rev">
+      <div><div class="ph-num">02</div><div class="ph-time">Months 4&ndash;7</div></div>
+      <div>
+        <h3>Intelligence Layer</h3>
+        <p>NLP node using quantized on-device language models, vision node with object detection and spatial mapping, and end-to-end natural language task execution demonstrated on a Universal Robots UR5 arm.</p>
+        <div class="ph-tags"><span class="ph-tag">NLP</span><span class="ph-tag">Computer Vision</span><span class="ph-tag">UR5 Integration</span></div>
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80&auto=format&fit=crop&crop=center" alt="Embedded computing board close-up — Jetson Nano and STM32 class hardware at the core of ARIA's intelligence layer" style="width:100%;height:160px;object-fit:cover;border-radius:12px;margin-top:18px;border:1px solid var(--border);">
+      </div>
+    </div>
+    <div class="phase rev">
+      <div><div class="ph-num">03</div><div class="ph-time">Months 7&ndash;11</div></div>
+      <div>
+        <h3>Federated Learning Network</h3>
+        <p>On-device reinforcement learning, federated averaging across three units, differential privacy integration, and validation of model update propagation between connected devices.</p>
+        <div class="ph-tags"><span class="ph-tag">Federated Learning</span><span class="ph-tag">Differential Privacy</span><span class="ph-tag">RL</span></div>
+      </div>
+    </div>
+    <div class="phase rev">
+      <div><div class="ph-num">04</div><div class="ph-time">Month 12</div></div>
+      <div>
+        <h3>Field Validation</h3>
+        <p>Real-world testing in an agricultural context with direct community partner engagement. Iteration based on observed failure modes. Full documentation and preparation for Phase 2 development and fundraising.</p>
+        <div class="ph-tags"><span class="ph-tag">Field Testing</span><span class="ph-tag">Community Validation</span><span class="ph-tag">Iteration</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="si">
+    <div class="contact-grid">
+      <div class="rev">
+        <div class="eyebrow">Contact</div>
+        <h2>Let's build<br><em>this together.</em></h2>
+        <p>Whether you are a potential partner, hardware collaborator, researcher, or simply someone who wants to learn more about ARIA &mdash; we would love to hear from you. We read every message and reply personally.</p>
+        <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Partnerships &amp; collaboration</div><div class="c-desc">Hardware manufacturers, robotics labs, development organisations</div></div></div>
+        <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Investment &amp; funding</div><div class="c-desc">Seed stage and impact-focused investors</div></div></div>
+        <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Research &amp; pilot programs</div><div class="c-desc">Academic institutions, NGOs, field partners</div></div></div>
+        <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Press &amp; media</div><div class="c-desc">Journalists, writers, and documentary makers</div></div></div>
+        <div class="c-location">
+          Naperville, IL &middot; United States<br>
+          yaseenaladdin0@gmail.com
+        </div>
+      </div>
+      <div class="form-card rev">
+        <div class="form-title">Send a message</div>
+        <div class="form-sub">Messages go directly to Yaseen at Aladdin Corporation.</div>
+        <div class="fg-row">
+          <div class="fg"><label>First name</label><input type="text" id="c-fn" placeholder="Jane"></div>
+          <div class="fg"><label>Last name</label><input type="text" id="c-ln" placeholder="Smith"></div>
+        </div>
+        <div class="fg"><label>Email address</label><input type="email" id="c-em" placeholder="jane@example.com"></div>
+        <div class="fg"><label>Organisation (optional)</label><input type="text" id="c-org" placeholder="Company or institution"></div>
+        <div class="fg">
+          <label>Reason for reaching out</label>
+          <select id="c-reason">
+            <option value="" disabled selected>Select one...</option>
+            <option>Partnership / collaboration</option>
+            <option>Investment inquiry</option>
+            <option>Research / pilot program</option>
+            <option>Press / media</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea id="c-msg" placeholder="Tell us about your interest in ARIA..."></textarea></div>
+        <button class="submit-btn" id="c-btn" onclick="submitContact()">Send message</button>
+        <div class="form-status" id="c-status"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2 style="color:#fff;">The world has the robots.<br><em>We build the brain.</em></h2>
+  <p>ARIA is designed from the outside in &mdash; starting with the world's most constrained users and scaling up, not down.</p>
+  <div class="cta-acts">
+    <button class="btn-w" onclick="openModal()">Get in touch &rarr;</button>
+    <a href="#top" class="btn-wo">Back to top &uarr;</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">ARIA<span>.</span> by Aladdin Corporation</div>
+  <div class="foot-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#federated">Technology</a>
+    <a href="#cases">Use Cases</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="foot-copy">Naperville, IL &middot; FII Innovators Pitch 2026</div>
+</footer>
+
+<script>
+// ── CONTACT FORM via Formspree ──────────────────────────────────────
+// Formspree works from local HTML files, GitHub Pages, and any host.
+// SETUP (2 minutes, free):
+// 1. Go to https://formspree.io and sign up with yaseenaladdin0@gmail.com
+// 2. Click "New Form", name it "ARIA Contact"
+// 3. Copy the form endpoint — it looks like: https://formspree.io/f/xyzabc12
+// 4. Paste it below replacing YOUR_FORMSPREE_ENDPOINT
+const FORMSPREE = 'https://formspree.io/f/maqvqjjp';
+
+async function sendForm(data, btnId, statusId) {
+  const btn = document.getElementById(btnId);
+  const box = document.getElementById(statusId);
+
+  if (!data.name || !data.email || !data.message) {
+    setStatus(box, 'err', 'Please fill in your name, email, and message.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    setStatus(box, 'err', 'Please enter a valid email address.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  box.style.display = 'none';
+
+  try {
+    const res = await fetch(FORMSPREE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const json = await res.json();
+    if (res.ok) {
+      setStatus(box, 'ok', "Message sent! We'll be in touch soon.");
+      btn.textContent = 'Sent!';
+    } else {
+      throw new Error(json.error || 'Unknown error');
+    }
+  } catch (err) {
+    console.error(err);
+    // Fallback: open mail client so message is never lost
+    const sub = encodeURIComponent('ARIA Inquiry from ' + data.name);
+    const body = encodeURIComponent(
+      'Name: ' + data.name + '\nEmail: ' + data.email +
+      '\nOrg: ' + (data.organisation||'N/A') +
+      '\nReason: ' + (data.reason||'N/A') +
+      '\n\n' + data.message
+    );
+    window.location.href = 'mailto:yaseenaladdin0@gmail.com?subject=' + sub + '&body=' + body;
+    setStatus(box, 'ok', 'Opening your email app to send directly...');
+    btn.disabled = false;
+    btn.textContent = 'Send message';
+  }
+}
+
+function setStatus(el, type, msg) {
+  el.className = 'form-status ' + type;
+  el.textContent = msg;
+}
+
+function submitModal() {
+  sendForm({
+    name:         document.getElementById('m-name').value.trim(),
+    email:        document.getElementById('m-email').value.trim(),
+    organisation: 'N/A',
+    reason:       'General inquiry',
+    message:      document.getElementById('m-msg').value.trim(),
+  }, 'm-btn', 'm-status');
+}
+
+function submitContact() {
+  const fn = document.getElementById('c-fn').value.trim();
+  const ln = document.getElementById('c-ln').value.trim();
+  sendForm({
+    name:         [fn,ln].filter(Boolean).join(' ') || 'Not provided',
+    email:        document.getElementById('c-em').value.trim(),
+    organisation: document.getElementById('c-org').value.trim() || 'N/A',
+    reason:       document.getElementById('c-reason').value || 'Not specified',
+    message:      document.getElementById('c-msg').value.trim(),
+  }, 'c-btn', 'c-status');
+}
+
+// ── Modal ──
+function openModal() {
+  document.getElementById('modal').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('on');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+
+// ── Scroll reveal ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.rev').forEach((el,i) => {
+  el.style.transitionDelay = (i%4 * 0.1)+'s';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
