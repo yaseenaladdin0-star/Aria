@@ -249,9 +249,9 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
 <section class="hero" id="top">
   <div class="hero-bg-grid"></div>
   <div class="hero-left">
-    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Concept Stage &mdash; Aladdin Corporation</div>
-    <h1>The universal<br>AI brain for<br><em>any robot.</em></h1>
-    <p class="hero-lead">ARIA is a modular intelligence layer designed to attach to virtually any existing robot and give it autonomous decision-making, environmental awareness, and continuous learning &mdash; for under $200.</p>
+    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Prototype Stage ;; Aladdin Corporation</div>
+    <h1>The universal<br>AI brain for<br>;any robot.</em></h1>
+    <p class="hero-lead">ARIA is a modular intelligence layer designed to attach to virtually any existing robot and give it autonomous decision-making, environmental awareness, and continuous learning ;; for under $200.</p>
     <div class="hero-btns">
       <a href="#solution" class="btn-p">See how it works &#8595;</a>
       <button class="btn-s" onclick="openModal()">Get in touch &#8599;</button>
@@ -267,7 +267,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
     <div class="hero-visual">
       <img class="hero-photo" src="https://images.unsplash.com/photo-1509099342178-e323b1717dba?w=800&q=80&auto=format&fit=crop&crop=top" alt="An African woman plants crops with her baby on her back — the daily reality ARIA is built to transform">
       <div class="hero-diagram-card">
-        <div class="diagram-label">ARIA System Architecture &mdash; concept</div>
+        <div class="diagram-label">ARIA System Architecture ;; concept</div>
         <!-- Three equal columns: Robot | ARIA HIM | Network. All tops at y=8, bottoms at y=140 -->
         <svg width="100%" viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg">
           <!-- Col 1: Robot (x 4..88) -->
@@ -321,12 +321,12 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
 <section class="problem" id="problem">
   <div class="si">
     <div class="eyebrow">The Problem</div>
-    <h2>Robots exist.<br><em>Intelligence doesn't.</em></h2>
+    <h2>Robots exist.<br>; Intelligence doesn't.</em></h2>
     <div class="prob-grid">
       <div class="prob-copy rev">
-        <p>The world has a robot paradox. Machines capable of transforming agriculture, healthcare, and disaster response have been deployed across the globe &mdash; yet the vast majority remain locked in rigid, pre-programmed routines. <strong>They cannot adapt, learn, or respond</strong> to the unpredictable complexity of real environments.</p>
+        <p>The world has a robot paradox. Machines capable of transforming agriculture, healthcare, and disaster response have been deployed across the globe; yet the vast majority remain locked in rigid, pre-programmed routines. <strong>They cannot adapt, learn, or respond</strong> to the unpredictable complexity of real environments.</p>
         <div class="pull-quote">"This is not a hardware problem. It is an intelligence problem."</div>
-        <p>Existing AI integration for robotics remains expensive, proprietary, and out of reach for the organizations that need it most. The communities who could benefit most from intelligent automation &mdash; <strong>smallholder farmers, understaffed hospitals, disaster first responders</strong> &mdash; are the ones systematically excluded from it.</p>
+        <p>Existing AI integration for robotics remains expensive, proprietary, and out of reach for the organizations that need it most. The communities that could benefit most from intelligent automation ;; <strong>smallholder farmers, understaffed hospitals, disaster first responders</strong> ;; are the ones systematically excluded from it.</p>
         <p>ARIA is designed to close that gap. Not by building new robots, but by giving intelligence to the ones that already exist.</p>
       </div>
       <div class="prob-cards rev">
@@ -335,7 +335,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
           <div class="pcard-body">
             <div class="pcard-tag amber">Agriculture &middot; Global</div>
             <div class="pcard-title">The precision gap</div>
-            <p>Smallholder farmers have access to basic robotic equipment but not the AI tools for precision agriculture &mdash; crop disease detection, autonomous navigation, or adaptive harvesting. Their robots follow fixed paths and cannot respond to their environment.</p>
+            <p>Smallholder farmers have access to basic robotic equipment but not the AI tools for precision agriculture ;; crop disease detection, autonomous navigation, or adaptive harvesting. Their robots follow fixed paths and cannot respond to their environment.</p>
           </div>
         </div>
         <div class="pcard">
@@ -351,7 +351,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
           <div class="pcard-body">
             <div class="pcard-tag teal">Disaster Response &middot; Global</div>
             <div class="pcard-title">The operator gap</div>
-            <p>Robotic search-and-rescue systems require trained specialist operators rarely available in the critical first hours of a disaster. A robot that only an expert can use saves far fewer lives than one anyone can direct.</p>
+            <p>Robotic search-and-rescue systems require trained specialist operators rarely available in the critical first hours of a disaster. A robot that only an expert can use saves far fewer lives than one that anyone can direct.</p>
           </div>
         </div>
       </div>
@@ -363,11 +363,11 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
 <section class="solution" id="solution">
   <div class="si">
     <div class="eyebrow">The Solution</div>
-    <h2>Two components.<br><em>One universal brain.</em></h2>
+    <h2>Two components.<br>;One universal brain.</em></h2>
     <div class="sol-grid">
       <div class="rev">
         <div class="diagram-wrap">
-          <div class="diagram-label">Hardware Interface Module &mdash; internal layout (conceptual)</div>
+          <div class="diagram-label">Hardware Interface Module ;; internal layout (conceptual)</div>
           <!-- Clean grid layout: header strip, 3 rows of chips, connector strip -->
           <svg width="100%" viewBox="0 0 320 196" xmlns="http://www.w3.org/2000/svg">
             <!-- PCB border -->
@@ -446,7 +446,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
             <div class="comp-ico blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a4f7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
             <div>
               <h3>Universal Compatibility</h3>
-              <p>ARIA does not replace robots &mdash; it gives them intelligence. Compatible with industrial arms, agricultural platforms, hospital robots, and any ROS2-capable system.</p>
+              <p>ARIA does not replace robots ;; it gives them intelligence. Compatible with industrial arms, agricultural platforms, hospital robots, and any ROS2-capable system.</p>
               <div class="comp-tag blue">Hardware-agnostic &middot; Offline-first</div>
             </div>
           </div>
@@ -460,11 +460,11 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
 <section class="federated" id="federated">
   <div class="si">
     <div class="eyebrow">Core Technology</div>
-    <h2>Every robot teaches<br><em>every other robot.</em></h2>
+    <h2>Every robot teaches<br>;every other robot.</em></h2>
     <div class="fed-grid">
       <div class="fed-copy rev">
-        <p>ARIA's core architectural innovation is a federated learning network across all deployed units. Each robot contributes <strong>anonymized behavioral improvements</strong> &mdash; not raw data &mdash; to a shared model. When one unit discovers a more effective approach to a task, that improvement propagates to other ARIA units on their next connection.</p>
-        <p>This is built on <strong>federated averaging and differential privacy</strong> &mdash; established techniques from the machine learning research community, applied here to physical robot behavior. No raw operational data ever leaves the device.</p>
+        <p>ARIA's core architectural innovation is a federated learning network across all deployed units. Each robot contributes <strong>anonymized behavioral improvements</strong> ;; not raw data ;; to a shared model. When one unit discovers a more effective approach to a task, that improvement propagates to other ARIA units on their next connection.</p>
+        <p>This is built on <strong>federated averaging and differential privacy</strong> ;; established techniques from the machine learning research community, applied here to physical robot behavior. No raw operational data ever leaves the device.</p>
         <p>The network effect is central to ARIA's value proposition: <strong>the more robots run ARIA, the smarter every robot becomes.</strong> Units that operate offline receive model updates when they next connect.</p>
         <div class="fed-stats">
           <div class="fed-stat"><div class="fed-num">100%</div><div class="fed-lbl">Operational without internet</div></div>
@@ -476,7 +476,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
       </div>
       <div class="rev">
         <div class="diagram-wrap">
-          <div class="diagram-label">Federated Learning Flow &mdash; conceptual illustration</div>
+          <div class="diagram-label">Federated Learning Flow ;; conceptual illustration</div>
           <!-- Federated diagram: marker arrows, mathematically precise -->
           <svg width="100%" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -595,9 +595,9 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
     <div class="cases-intro">
       <div>
         <div class="eyebrow">Target Impact Areas</div>
-        <h2>Three sectors.<br><em>One brain.</em></h2>
+        <h2>Three sectors.<br>;One brain.</em></h2>
       </div>
-      <p class="lead rev">ARIA is designed around the communities that need accessible, intelligent robotics most &mdash; and have historically been excluded from it. Each use case is grounded in a real, documented need.</p>
+      <p class="lead rev">ARIA is designed around the communities that need accessible, intelligent robotics most ;; and have historically been excluded from it. Each use case is grounded in a real, documented need.</p>
     </div>
     <div class="cases-grid rev">
       <div class="case">
@@ -605,7 +605,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
         <div class="case-body">
           <div class="case-sector">Agriculture</div>
           <h3>Smallholder Farming</h3>
-          <p>ARIA is designed to give basic agricultural robots the ability to navigate variable terrain, identify visual anomalies in crops, and respond to voice instructions in the operator's language &mdash; with no connectivity required. The goal: make precision agriculture accessible far beyond large commercial operations.</p>
+          <p>ARIA is designed to give basic agricultural robots the ability to navigate variable terrain, identify visual anomalies in crops, and respond to voice instructions in the operator's language ;; with no connectivity required. The goal: make precision agriculture accessible far beyond large commercial operations.</p>
           <div class="case-goal">Goal: Autonomous field operation without specialist training</div>
         </div>
       </div>
@@ -614,7 +614,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
         <div class="case-body">
           <div class="case-sector">Healthcare</div>
           <h3>Understaffed Hospitals</h3>
-          <p>ARIA aims to transform basic robotic aids into adaptive assistants that can recognize changes in their environment, adjust routing in real time, and communicate with staff using natural language &mdash; dramatically expanding what low-cost hardware can do in resource-constrained settings.</p>
+          <p>ARIA aims to transform basic robotic aids into adaptive assistants that can recognize changes in their environment, adjust routing in real time, and communicate with staff using natural language ;; dramatically expanding what low-cost hardware can do in resource-constrained settings.</p>
           <div class="case-goal">Goal: Adaptive ward assistance without reprogramming</div>
         </div>
       </div>
@@ -623,7 +623,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
         <div class="case-body">
           <div class="case-sector">Disaster Response</div>
           <h3>First Responder Robotics</h3>
-          <p>ARIA is designed so that any first responder &mdash; without technical training &mdash; can deploy and direct a robot using plain language commands. The goal is to remove the specialist operator requirement that currently limits robotic deployment in the critical early hours of a disaster.</p>
+          <p>ARIA is designed so that any first responder ;; without technical training ;; can deploy and direct a robot using plain language commands. The goal is to remove the specialist operator requirement that currently limits robotic deployment in the critical early hours of a disaster.</p>
           <div class="case-goal">Goal: Zero-training deployment for any first responder</div>
         </div>
       </div>
@@ -637,7 +637,7 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
     <div class="road-intro">
       <div>
         <div class="eyebrow">Build Roadmap</div>
-        <h2>From architecture<br><em>to prototype.</em></h2>
+        <h2>From architecture<br>;to prototype.</em></h2>
       </div>
       <p class="lead rev">A 12-month pathway from architecture design to a validated field-tested prototype. Each phase builds directly on the last, with honest milestones and real engineering deliverables.</p>
     </div>
@@ -683,8 +683,8 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
     <div class="contact-grid">
       <div class="rev">
         <div class="eyebrow">Contact</div>
-        <h2>Let's build<br><em>this together.</em></h2>
-        <p>Whether you are a potential partner, hardware collaborator, researcher, or simply someone who wants to learn more about ARIA &mdash; we would love to hear from you. We read every message and reply personally.</p>
+        <h2>Let's build<br>;this together.</em></h2>
+        <p>Whether you are a potential partner, hardware collaborator, researcher, or simply someone who wants to learn more about ARIA ;; we would love to hear from you. We read every message and reply personally.</p>
         <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Partnerships &amp; collaboration</div><div class="c-desc">Hardware manufacturers, robotics labs, development organisations</div></div></div>
         <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Investment &amp; funding</div><div class="c-desc">Seed stage and impact-focused investors</div></div></div>
         <div class="c-detail"><div class="c-bar"></div><div><div class="c-title">Research &amp; pilot programs</div><div class="c-desc">Academic institutions, NGOs, field partners</div></div></div>
@@ -724,8 +724,8 @@ footer{background:var(--ink);padding:44px 48px;display:flex;justify-content:spac
 
 <!-- CTA BAND -->
 <div class="cta-band">
-  <h2 style="color:#fff;">The world has the robots.<br><em>We build the brain.</em></h2>
-  <p>ARIA is designed from the outside in &mdash; starting with the world's most constrained users and scaling up, not down.</p>
+  <h2 style="color:#fff;">The world has the robots.<br>;We build the brain.</em></h2>
+  <p>ARIA is designed from the outside in ;; starting with the world's most constrained users and scaling up, not down.</p>
   <div class="cta-acts">
     <button class="btn-w" onclick="openModal()">Get in touch &rarr;</button>
     <a href="#top" class="btn-wo">Back to top &uarr;</a>
